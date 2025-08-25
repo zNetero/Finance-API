@@ -1,7 +1,12 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../database')
 
-const Transaction = sequelize.define("Transaction",{
+const Transaction = sequelize.define("Transaction", {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
     type: {
         type: DataTypes.ENUM('entry', 'exit'),
         allowNull: false
@@ -18,6 +23,10 @@ const Transaction = sequelize.define("Transaction",{
         type: DataTypes.STRING,
         allowNull: true
     }
-});
+}, {
+    tableName: 'Transactions',
+    timestamps: true
+},
+);
 
 module.exports = Transaction;
