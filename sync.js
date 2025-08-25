@@ -9,4 +9,4 @@ async function syncDataBase(){
     }
 }
 
-module.exports = syncDataBase;
+module.exports = {syncDataBase};
