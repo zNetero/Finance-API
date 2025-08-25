@@ -8,7 +8,7 @@ const Transaction = sequelize.define("Transaction", {
         autoIncrement: true
     },
     type: {
-        type: DataTypes.ENUM('entry', 'exit'),
+        type: DataTypes.ENUM('income', 'expense'),
         allowNull: false
     },
     value: {
