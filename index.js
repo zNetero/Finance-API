@@ -1,6 +1,8 @@
 const {createTransaction} = require('./controllers/create');
 const {syncDataBase} = require('./sync');
 const express = require('express');
+const {readTransactions} = require('./controllers/read');
+
 
 const app = express()
 app.use(express.json());
@@ -11,6 +13,8 @@ app.post('/transactions', async(req,res) =>{
             req.body.value, 
             req.body.data, 
             req.body.description);
+            
+            
             res.status(201).json({
                 message: 'Transaction created successfully',
                 transaction
@@ -22,10 +26,25 @@ app.post('/transactions', async(req,res) =>{
     }
 })
 
+app.get('/transactions', async(req,res)=>{
+    try{
+        const transactions = await readTransactions();
+        res.status(200).json(transactions)
+    }catch(error){
+        res.status(500).json({
+            error: error.message
+        })
+    }
+})
+
+
+
 syncDataBase()
     .then(()=>{
         app.listen(3000, ()=>{
             console.log('API ON');
         })
     })
+
+
 
