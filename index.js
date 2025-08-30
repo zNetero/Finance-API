@@ -3,6 +3,7 @@ const {syncDataBase} = require('./sync');
 const express = require('express');
 const {readTransactions} = require('./controllers/read');
 const {updateTransaction} = require('./controllers/update');
+const {deleteTransaction} = require('./controllers/delete');
 
 
 const app = express()
@@ -57,6 +58,20 @@ app.put('/transactions/:id', async(req,res)=>{
     }
 })
 
+
+app.delete('/transaction/:id', async(req,res)=>{
+    try{
+        const transaction = await deleteTransaction(req.params.id);
+        res.status(200).json({
+            message: 'Transaction deleted sucessfully',
+            transaction
+        })
+    }catch(error){
+        res.status(500).json({
+            error: error.message
+        })
+    }
+})
 
 
 syncDataBase()
